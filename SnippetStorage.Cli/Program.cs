@@ -6,7 +6,6 @@
     class Program
     {
         private static readonly Logger Log = LogManager.GetCurrentClassLogger();
-
         
         static void Main(string[] args)
         {
@@ -24,13 +23,7 @@
                         Log.Info("List command selected . . .");
                         return;
                     }
-                    
-                    if (option.Show)
-                    {
-                        Log.Info("Show command selected . . .");
-                        return;
-                    }
-                    
+
                     if (option.Copy)
                     {
                         Log.Info("Copy command selected . . .");
