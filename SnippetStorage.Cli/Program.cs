@@ -1,6 +1,7 @@
 ﻿namespace SnippetStorage.Cli
 {
     using CommandLine;
+    using Core;
     using NLog;
 
     class Program
@@ -15,6 +16,8 @@
                     if (option.Store)
                     {
                         Log.Info("Store command selected . . .");
+                        Log.Info($"Name={option.Name}, Path={option.Path}");
+                        Database.Instance.CreateRecord(SnippetRecord.Create(option.Name, option.Path));
                         return;
                     }
                     
