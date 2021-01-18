@@ -23,7 +23,15 @@
                     
                     if (option.List)
                     {
+                        // TODO: format in a nice looking table w/ size displayed, a description,
+                        // maybe a preview of the text
                         Log.Info("List command selected . . .");
+                        var records = Database.Instance.GetAllRecords();
+
+                        foreach (var snippetRecord in records)
+                        {
+                            Log.Info(snippetRecord.Name);
+                        }
                         return;
                     }
 

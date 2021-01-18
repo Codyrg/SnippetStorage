@@ -158,7 +158,7 @@
 
                 var records = collection.Query();
                 
-                return records.ToEnumerable();
+                return records.ToList();
             }
             catch (Exception e)
             {
