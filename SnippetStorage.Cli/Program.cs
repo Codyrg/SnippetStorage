@@ -39,6 +39,7 @@
 
                     if (option.Copy)
                     {
+                        // TODO: implement command for copying a snippet to the clipboard
                         Log.Info("Copy command selected . . .");
                         return;
                     }
@@ -73,12 +74,14 @@
                     
                     if (option.Import)
                     {
+                        // TODO: implement commmand for importing SnippetStorage configuration
                         Log.Info("Import command selected . . .");
                         return;
                     }
                     
                     if (option.Export)
                     {
+                        // TODO: implement command for exporting SnippetStorage configuration
                         Log.Info("Export command selected . . .");
                         return;
                     }
