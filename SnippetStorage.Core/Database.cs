@@ -62,7 +62,7 @@
         
         private Database()
         {
-            Log.Info($"InternalDatabaseLocation={InternalDatabaseLocation}");
+            Log.Info($"Internal Database Location={InternalDatabaseLocation}");
         }
         
         /// <summary>
