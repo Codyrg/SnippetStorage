@@ -1,6 +1,7 @@
 ﻿namespace SnippetStorage.Core
 {
     using System;
+    using System.Collections.Generic;
     using System.IO;
     using LiteDB;
     using NLog;
@@ -67,7 +68,7 @@
         /// <summary>
         /// Adds the provided record to the database
         /// </summary>
-        /// <param name="record"></param>
+        /// <param name="record">the record to add to the database</param>
         /// <returns></returns>
         public ReturnCode CreateRecord(SnippetRecord record)
         {
@@ -117,8 +118,52 @@
             }
         }
 
-        // TODO: read a single record
-        
-        // TODO: read all records
+        /// <summary>
+        /// Returns a SnippetRecord with a name equal to the input parameter
+        /// </summary>
+        /// <param name="name">the name of the record to retrieve</param>
+        /// <returns></returns>
+       public SnippetRecord GetRecord(string name)
+        {
+            try
+            {
+                using var db = new LiteDatabase(InternalDatabaseLocation);
+
+                var collection = db.GetCollection<SnippetRecord>(CollectionName);
+
+                var record = collection.Query()
+                    .Where(x => x.Name == name);
+
+                var result = record.FirstOrDefault();
+
+                return result;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Retrieve all records from the snippets collection
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<SnippetRecord> GetAllRecords()
+        {
+            try
+            {
+                using var db = new LiteDatabase(InternalDatabaseLocation);
+
+                var collection = db.GetCollection<SnippetRecord>(CollectionName);
+
+                var records = collection.Query();
+                
+                return records.ToEnumerable();
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
     }
 }
