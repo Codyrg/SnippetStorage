@@ -79,10 +79,8 @@
                 
                 var collection = db.GetCollection<SnippetRecord>(CollectionName);
                 
-                collection.Insert(record);
+                var result = collection.Insert(record);
                 
-                var result = db.Commit();
-
                 return ReturnCode.Success;
             }
             catch (Exception e)
@@ -106,13 +104,12 @@
 
                 var collection = db.GetCollection<SnippetRecord>(CollectionName);
 
-                var record = collection.Query()
-                    .Where(x => x.Name == name)
-                    .GetPlan();
+                var toRemove = collection.Query()
+                    .Where(x => x.Name == name);
 
-                collection.Delete(record);
+                var result = collection.Delete(toRemove.First().Id);
 
-                return ReturnCode.Success;
+                return result ? ReturnCode.Success : ReturnCode.Failure;
             }
             catch (Exception e)
             {

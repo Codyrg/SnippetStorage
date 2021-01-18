@@ -42,6 +42,8 @@
                     if (option.Delete)
                     {
                         Log.Info("Delete command selected . . .");
+                        Log.Info($"Name={option.Name}");
+                        Database.Instance.DeleteRecord(option.Name);
                         return;
                     }
                     

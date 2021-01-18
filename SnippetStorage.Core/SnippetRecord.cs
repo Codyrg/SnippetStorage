@@ -9,6 +9,11 @@
     public class SnippetRecord
     {
         /// <summary>
+        /// Id of snippet
+        /// </summary>
+        public int Id { get; set; }
+        
+        /// <summary>
         /// The name that identifies this snippet
         /// </summary>
         public string Name { get; set; }

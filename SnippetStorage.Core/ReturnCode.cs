@@ -5,6 +5,7 @@
     /// </summary>
     public enum ReturnCode
     {
+        // TODO: add more detailed return codes for Db failures
         Success,
         
         Failure
