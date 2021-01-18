@@ -1,5 +1,7 @@
 ﻿namespace SnippetStorage.Cli
 {
+    using System;
+    using System.IO;
     using CommandLine;
     using Core;
     using NLog;
@@ -44,6 +46,20 @@
                     if (option.Generate)
                     {
                         Log.Info("Generate command selected . . .");
+                        
+                        try
+                        {
+                            var snippet = Database.Instance.GetRecord(option.Name);
+                            
+                            File.WriteAllText(option.Path, snippet.Content);
+                            
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e);
+                            throw;
+                        }
+                        
                         return;
                     }
                     
