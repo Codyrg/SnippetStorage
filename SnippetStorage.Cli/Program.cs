@@ -53,8 +53,7 @@
         /// <summary>
         /// Use to store a snippet, requires specifying Path option of snippet to store and a name to store it under
         /// </summary>
-        /// <param name="name"></param>
-        /// <param name="path"></param>
+        /// <param name="args">sub command arguments</param>
         public static void Store(IEnumerable<string> args)
         {
             Parser.Default.ParseArguments<StoreOptions>(args)
@@ -67,6 +66,7 @@
         /// <summary>
         /// Use to list data on a snippet, if no name is specified, data on all snippets will be listed
         /// </summary>
+        /// <param name="args">sub command arguments</param>
         public static void List(IEnumerable<string> args)
         {
             Parser.Default.ParseArguments<ListOptions>(args)
@@ -97,7 +97,7 @@
         /// <summary>
         /// Use to copy the contents of a specified snippet name, requires specify Name option of snippet to copy
         /// </summary>
-        /// <param name="name"></param>
+        /// <param name="args">sub command arguments</param>
         public static void Copy(IEnumerable<string> args)
         {
             Parser.Default.ParseArguments<CopyOptions>(args)
@@ -112,8 +112,7 @@
         /// Use to generate a file with the contents of a specified snippet name, requires specify Name option of snippet to copy
         /// and a path to a file in which the snippet should be generated in
         /// </summary>
-        /// <param name="name"></param>
-        /// <param name="path"></param>
+        /// <param name="args">sub command arguments</param>
         public static void Generate(IEnumerable<string> args)
         {
             Parser.Default.ParseArguments<GenerateOptions>(args)
@@ -134,14 +133,12 @@
                         throw;
                     }
                 });
-            
-            
         }
         
         /// <summary>
         /// Use to delete a specified snippet by name
         /// </summary>
-        /// <param name="name"></param>
+        /// <param name="args">sub command arguments</param>
         public static void Delete(IEnumerable<string> args)
         {
             Parser.Default.ParseArguments<DeleteOptions>(args)
