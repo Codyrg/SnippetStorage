@@ -11,51 +11,23 @@
     class Program
     {
         private static readonly Logger Log = LogManager.GetCurrentClassLogger();
-        
+
+        private const string _primaryOptionsPrompt =
+            "Please supply one of the following primary arguments:\nstore\nlist\ncopy\ngenerate\ndelete\nimport\nexport"; 
+            
         static void Main(string[] args)
         {
             if (args == null || args.Length == 0)
             {
                 Log.Error("No arguments supplied");
+                Log.Info(_primaryOptionsPrompt);
                 return;
             }
 
             var remaining = args.Skip(1);
             
             
-            Parser.Default.ParseArguments<Options>(remaining)
-                .WithParsed(option =>
-                {
-                    
-                    // peel off the primary command
-                    switch (args[0])
-                    {
-                        case "store":
-                            Store(option.Name, option.Path);
-                            break;
-                        case "list":
-                            List();
-                            break;
-                        case "copy":
-                            Copy(option.Name);
-                            break;
-                        case "generate":
-                            Generate(option.Name, option.Path);
-                            break;
-                        case "delete":
-                            Delete(option.Name);
-                            break;
-                        case "import":
-                            Import(option.Name);
-                            break;
-                        case "export":
-                            Export(option.Name);
-                            break;
-                        default:
-                            Log.Error("Invalid primary option selected.");
-                            break;
-                    }
-                });
+           
         }
 
         /// <summary>
