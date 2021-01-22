@@ -7,27 +7,47 @@
     using CommandLine;
     using Core;
     using NLog;
+    using Options;
 
     class Program
     {
         private static readonly Logger Log = LogManager.GetCurrentClassLogger();
 
-        private const string _primaryOptionsPrompt =
-            "Please supply one of the following primary arguments:\nstore\nlist\ncopy\ngenerate\ndelete\nimport\nexport"; 
-            
         static void Main(string[] args)
         {
-            if (args == null || args.Length == 0)
+            if (args is null || args.Length == 0)
             {
-                Log.Error("No arguments supplied");
-                Log.Info(_primaryOptionsPrompt);
                 return;
             }
-
-            var remaining = args.Skip(1);
             
+            var subOptions = args.Skip(1);
             
-           
+            // peel off the primary command
+            switch (args[0])
+            {
+                case "store":
+                    Store(subOptions);
+                    break;
+                case "list":
+                    break;
+                case "copy":
+                    break;
+                case "generate":
+                    break;
+                case "delete":
+                    break;
+                default:
+                    Log.Error("Invalid primary option selected.");
+                    Log.Error("Please supply one of the following primary arguments:\n" +
+                             "store\n" +
+                             "list\n" +
+                             "copy\n" +
+                             "generate\n" +
+                             "delete\n" +
+                             "import\n" +
+                             "export");
+                    break;
+            }
         }
 
         /// <summary>
@@ -35,35 +55,57 @@
         /// </summary>
         /// <param name="name"></param>
         /// <param name="path"></param>
-        public static void Store(string name, string path)
+        public static void Store(IEnumerable<string> args)
         {
-            Database.Instance.CreateRecord(SnippetRecord.Create(name, path));
+            Parser.Default.ParseArguments<StoreOptions>(args)
+                .WithParsed(option =>
+                {
+                    Database.Instance.CreateRecord(SnippetRecord.Create(option.Name, option.Path));
+                });
         }
         
         /// <summary>
         /// Use to list data on a snippet, if no name is specified, data on all snippets will be listed
         /// </summary>
-        public static void List()
+        public static void List(IEnumerable<string> args)
         {
-            // TODO: format in a nice looking table w/ size displayed, a description,
-            // maybe a preview of the text
-            Log.Info("List command selected . . .");
-            var records = Database.Instance.GetAllRecords();
+            Parser.Default.ParseArguments<ListOptions>(args)
+                .WithParsed(option =>
+                {
+                    // if name is specified, print content
+                    if (option.Name != null)
+                    {
+                        var record = Database.Instance.GetRecord(option.Name);
+                        
+                        Log.Info(record.Content);
 
-            foreach (var snippetRecord in records)
-            {
-                Log.Info(snippetRecord.Name);
-            }
+                        return;
+                    }
+                    
+                    // TODO: format in a nice looking table w/ size displayed, a description,
+                    // maybe a preview of the text
+                    Log.Info("List command selected . . .");
+                    var records = Database.Instance.GetAllRecords();
+
+                    foreach (var snippetRecord in records)
+                    {
+                        Log.Info(snippetRecord.Name);
+                    }
+                });
         }
         
         /// <summary>
         /// Use to copy the contents of a specified snippet name, requires specify Name option of snippet to copy
         /// </summary>
         /// <param name="name"></param>
-        public static void Copy(string name)
+        public static void Copy(IEnumerable<string> args)
         {
-            // TODO: implement command for copying a snippet to the clipboard
-            Log.Info("Copy command selected . . .");
+            Parser.Default.ParseArguments<CopyOptions>(args)
+                .WithParsed(option =>
+                {
+                    // TODO: implement command for copying a snippet to the clipboard
+                    Log.Info("Copy command selected . . .");
+                });
         }
         
         /// <summary>
@@ -72,51 +114,42 @@
         /// </summary>
         /// <param name="name"></param>
         /// <param name="path"></param>
-        public static void Generate(string name, string path)
+        public static void Generate(IEnumerable<string> args)
         {
-            Log.Info("Generate command selected . . .");
+            Parser.Default.ParseArguments<GenerateOptions>(args)
+                .WithParsed(option =>
+                {
+                    Log.Info("Generate command selected . . .");
                         
-            try
-            {
-                var snippet = Database.Instance.GetRecord(name);
+                    try
+                    {
+                        var snippet = Database.Instance.GetRecord(option.Name);
                             
-                File.WriteAllText(path, snippet.Content);
+                        File.WriteAllText(option.Path, snippet.Content);
                             
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                        throw;
+                    }
+                });
+            
+            
         }
         
         /// <summary>
         /// Use to delete a specified snippet by name
         /// </summary>
         /// <param name="name"></param>
-        public static void Delete(string name)
+        public static void Delete(IEnumerable<string> args)
         {
-            Database.Instance.DeleteRecord(name);
-        }
-        
-        /// <summary>
-        /// Used to import a snippet config from a specified path
-        /// </summary>
-        /// <param name="path"></param>
-        public static void Import(string path)
-        {
-            // TODO: implement commmand for importing SnippetStorage configuration
-            Log.Info("Import command selected . . .");
-        }
-        
-        /// <summary>
-        /// Used to export a snippet config to a specified path
-        /// </summary>
-        /// <param name="path"></param>
-        public static void Export(string path)
-        {
-            // TODO: implement command for exporting SnippetStorage configuration
-            Log.Info("Export command selected . . .");
+            Parser.Default.ParseArguments<DeleteOptions>(args)
+                .WithParsed(option =>
+                {
+                    Database.Instance.DeleteRecord(option.Name);
+
+                });
         }
     }
 }
