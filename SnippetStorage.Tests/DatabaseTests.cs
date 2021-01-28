@@ -48,7 +48,7 @@ namespace SnippetStorage.Tests
         /// Makes sure it is not possible to add records with redundant names
         /// </summary>
         [Fact]
-        public void AddRedundantName()
+        public void AddRedundantNameTest()
         {
             Database.Instance.CreateRecord(SnippetRecord.Create("test", "test1.txt"));
             Database.Instance.CreateRecord(SnippetRecord.Create("test", "test1.txt"));
@@ -62,7 +62,7 @@ namespace SnippetStorage.Tests
         /// Tests the ability to retrieve all records
         /// </summary>
         [Fact]
-        public void RetrieveAllRecords()
+        public void RetrieveAllRecordsTest()
         {
             Database.Instance.CreateRecord(SnippetRecord.Create("test1", "test1.txt"));
             Database.Instance.CreateRecord(SnippetRecord.Create("test2", "test1.txt"));
