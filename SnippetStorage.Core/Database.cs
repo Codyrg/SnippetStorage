@@ -81,6 +81,39 @@
             }
         }
         
+        
+        public ReturnCode UpdateRecord(SnippetRecord record)
+        {
+            Log.Info("Updating record . . .");
+
+            try
+            {
+                using var db = new LiteDatabase(Library.InternalDatabaseLocation);
+                
+                var collection = db.GetCollection<SnippetRecord>(Library.CollectionName);
+
+                var id = collection.Query()
+                    .ToEnumerable()
+                    .FirstOrDefault(x => x.Name == record.Name)
+                    ?.Id;
+                
+                if (id == null)
+                {
+                    return ReturnCode.NoRecordToUpdate;
+                }
+
+                collection.Update(id, record);
+                
+                return ReturnCode.Success;
+            }
+            catch (Exception e)
+            {
+                Log.Error("Attempt to record record failed . . .");
+
+                return ReturnCode.Failure;
+            }
+        }
+        
        /// <summary>
        /// Delete a record with a provided name
        /// </summary>

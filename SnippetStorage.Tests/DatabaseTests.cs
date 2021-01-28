@@ -21,6 +21,7 @@ namespace SnippetStorage.Tests
         /// </summary>
         public DatabaseTests()
         {
+            // TODO: Remove test files and generate at runtime
             DbLocation = Maintenance.GenerateTestDb();
         }
         
@@ -57,6 +58,9 @@ namespace SnippetStorage.Tests
             Assert.Single(records);
         }
 
+        /// <summary>
+        /// Tests the ability to retrieve all records
+        /// </summary>
         [Fact]
         public void RetrieveAllRecords()
         {
@@ -66,8 +70,31 @@ namespace SnippetStorage.Tests
 
             var records = Database.Instance.GetAllRecords();
             
-            Assert.Equal(records.Count(), 3);
+            Assert.Equal(3, records.Count());
         }
+
+        /// <summary>
+        /// Tests the ability to update records
+        /// </summary>
+        [Fact]
+        public void UpdateRecordTest()
+        {
+            Database.Instance.CreateRecord(SnippetRecord.Create("test", "test1.txt"));
+
+            var before = Database.Instance.GetRecord("test")?.Content;
+            
+            Assert.Equal("123", before);
+
+            Database.Instance.UpdateRecord(SnippetRecord.Create("test", "test2.txt"));
+            
+            var after = Database.Instance.GetRecord("test")?.Content;
+            
+            Assert.Equal("xyz", after);
+
+        }
+        
+        // TODO: test to limit storage size
+        // TODO: test to limit number of records
 
         /// <inheritdoc/>
         public void Dispose()

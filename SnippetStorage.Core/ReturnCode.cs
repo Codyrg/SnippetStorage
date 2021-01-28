@@ -18,6 +18,11 @@
         /// <summary>
         /// Attempted to store an existing name
         /// </summary>
-        NameExists
+        NameExists,
+        
+        /// <summary>
+        /// Attempted to update a nonexistent record
+        /// </summary>
+        NoRecordToUpdate
     }
 }
