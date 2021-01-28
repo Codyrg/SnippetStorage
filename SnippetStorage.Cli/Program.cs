@@ -25,16 +25,17 @@
             // peel off the primary command
             switch (args[0])
             {
-                case "store":
-                    Store(subOptions);
-                    break;
-                case "list":
-                    break;
-                case "copy":
-                    break;
-                case "generate":
-                    break;
-                case "delete":
+                    case "store":
+                        Store(subOptions);
+                        break;
+                    case "list":
+                        List(subOptions);
+                        break;
+                    case "copy":
+                        break;
+                    case "generate":
+                        break;
+                    case "delete":
                     break;
                 default:
                     Log.Error("Invalid primary option selected.");
