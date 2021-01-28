@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.IO;
     using LiteDB;
     using NLog;
 
@@ -16,23 +15,6 @@
         private static Database _instance;
         private static readonly object Mutex = new object();
 
-        /// <summary>
-        /// Path where internal database is stored
-        /// </summary>
-        public static string InternalDatabaseFolder { get; } = Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-            "Snippet Storage");
-        
-        /// <summary>
-        /// File path of internal database
-        /// </summary>
-        public static string InternalDatabaseLocation { get; } = Path.Combine(InternalDatabaseFolder, "snippets.db");
-
-        /// <summary>
-        /// Name of the collection that snippets are stored in
-        /// </summary>
-        public static string CollectionName { get; } = "snippets";
-        
         /// <summary>
         /// Returns database instancee
         /// </summary>
@@ -62,7 +44,6 @@
         
         private Database()
         {
-            Log.Info($"Internal Database Location={InternalDatabaseLocation}");
         }
         
         /// <summary>
@@ -76,9 +57,9 @@
             // TODO: enforce unique name insertions/overwrite
             try
             {
-                using var db = new LiteDatabase(InternalDatabaseLocation);
+                using var db = new LiteDatabase(Library.InternalDatabaseLocation);
                 
-                var collection = db.GetCollection<SnippetRecord>(CollectionName);
+                var collection = db.GetCollection<SnippetRecord>(Library.CollectionName);
                 
                 var result = collection.Insert(record);
                 
@@ -101,9 +82,9 @@
         {
             try
             {
-                using var db = new LiteDatabase(InternalDatabaseLocation);
+                using var db = new LiteDatabase(Library.InternalDatabaseLocation);
 
-                var collection = db.GetCollection<SnippetRecord>(CollectionName);
+                var collection = db.GetCollection<SnippetRecord>(Library.CollectionName);
 
                 var toRemove = collection.Query()
                     .Where(x => x.Name == name);
@@ -127,9 +108,9 @@
         {
             try
             {
-                using var db = new LiteDatabase(InternalDatabaseLocation);
+                using var db = new LiteDatabase(Library.InternalDatabaseLocation);
 
-                var collection = db.GetCollection<SnippetRecord>(CollectionName);
+                var collection = db.GetCollection<SnippetRecord>(Library.CollectionName);
 
                 var record = collection.Query()
                     .Where(x => x.Name == name);
@@ -152,9 +133,9 @@
         {
             try
             {
-                using var db = new LiteDatabase(InternalDatabaseLocation);
+                using var db = new LiteDatabase(Library.InternalDatabaseLocation);
 
-                var collection = db.GetCollection<SnippetRecord>(CollectionName);
+                var collection = db.GetCollection<SnippetRecord>(Library.CollectionName);
 
                 var records = collection.Query();
                 

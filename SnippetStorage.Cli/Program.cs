@@ -73,6 +73,8 @@
             Parser.Default.ParseArguments<ListOptions>(args)
                 .WithParsed(option =>
                 {
+                    Log.Info("List command selected . . .");
+
                     // if name is specified, print content
                     if (option.Name != null)
                     {
@@ -85,8 +87,13 @@
                     
                     // TODO: format in a nice looking table w/ size displayed, a description,
                     // maybe a preview of the text
-                    Log.Info("List command selected . . .");
                     var records = Database.Instance.GetAllRecords();
+
+                    if (records.Count() == 0)
+                    {
+                        Log.Info("You have no snippets stored.");
+                        return;
+                    }
 
                     foreach (var snippetRecord in records)
                     {
