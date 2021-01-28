@@ -81,7 +81,12 @@
             }
         }
         
-        
+        /// <summary>
+        /// Updates a record in the collection with a name mathcing that of
+        /// the parameter record
+        /// </summary>
+        /// <param name="record">Record to update in collection</param>
+        /// <returns></returns>
         public ReturnCode UpdateRecord(SnippetRecord record)
         {
             Log.Info("Updating record . . .");
