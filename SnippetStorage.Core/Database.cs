@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using LiteDB;
     using NLog;
 
@@ -54,14 +55,21 @@
         public ReturnCode CreateRecord(SnippetRecord record)
         {
             Log.Info("Creating record . . .");
-            // TODO: enforce unique name insertions/overwrite
+
             try
             {
                 using var db = new LiteDatabase(Library.InternalDatabaseLocation);
                 
                 var collection = db.GetCollection<SnippetRecord>(Library.CollectionName);
+
+                if (collection.Query()
+                    .ToEnumerable()
+                    .Any(x => x.Name == record.Name))
+                {
+                    return ReturnCode.NameExists;
+                }
                 
-                var result = collection.Insert(record);
+                collection.Insert(record);
                 
                 return ReturnCode.Success;
             }

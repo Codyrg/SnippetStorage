@@ -5,9 +5,19 @@
     /// </summary>
     public enum ReturnCode
     {
-        // TODO: add more detailed return codes for Db failures
+        /// <summary>
+        /// Operation was successful
+        /// </summary>
         Success,
         
-        Failure
+        /// <summary>
+        /// Operation Failed
+        /// </summary>
+        Failure,
+        
+        /// <summary>
+        /// Attempted to store an existing name
+        /// </summary>
+        NameExists
     }
 }
