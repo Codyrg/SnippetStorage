@@ -1,6 +1,7 @@
 namespace SnippetStorage.Tests
 {
     using System;
+    using System.Linq;
     using Core;
     using Xunit;
     
@@ -56,7 +57,18 @@ namespace SnippetStorage.Tests
             Assert.Single(records);
         }
 
-        
+        [Fact]
+        public void RetrieveAllRecords()
+        {
+            Database.Instance.CreateRecord(SnippetRecord.Create("test1", "test1.txt"));
+            Database.Instance.CreateRecord(SnippetRecord.Create("test2", "test1.txt"));
+            Database.Instance.CreateRecord(SnippetRecord.Create("test3", "test1.txt"));
+
+            var records = Database.Instance.GetAllRecords();
+            
+            Assert.Equal(records.Count(), 3);
+        }
+
         /// <inheritdoc/>
         public void Dispose()
         {
