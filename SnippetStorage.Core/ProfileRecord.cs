@@ -3,13 +3,13 @@
     /// <summary>
     /// Profile containing a user's snippets
     /// </summary>
-    public class Profile
+    public class ProfileRecord
     {
         /// <summary>
         /// Creates a Profile
         /// </summary>
         /// <param name="name"></param>
-        public Profile(string name)
+        public ProfileRecord(string name)
         {
             Name = name;
         }
