@@ -3,7 +3,7 @@
     /// <summary>
     /// Profile containing a user's snippets
     /// </summary>
-    public class ProfileRecord
+    public class ProfileRecord : IRecord
     {
         /// <summary>
         /// Creates a Profile
@@ -13,6 +13,9 @@
         {
             Name = name;
         }
+        
+        /// <inheritdoc/>
+        public int Id { get; set; }
         
         /// <summary>
         /// Name of user's profile

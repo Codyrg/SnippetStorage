@@ -6,11 +6,9 @@
     /// <summary>
     /// A POCO for snippet data
     /// </summary>
-    public class SnippetRecord
+    public class SnippetRecord : IRecord
     {
-        /// <summary>
-        /// Id of snippet
-        /// </summary>
+        /// <inheritdoc/>
         public int Id { get; set; }
         
         /// <summary>
