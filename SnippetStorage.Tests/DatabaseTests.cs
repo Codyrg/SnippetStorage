@@ -31,15 +31,17 @@ namespace SnippetStorage.Tests
         [Fact]
         public void AddAndRemoveTest()
         {
-            Database.Instance.CreateRecord(SnippetRecord.Create("test", "test1.txt"));
+            var record = SnippetRecord.Create("test", "test1.txt");
+            
+            Database.Instance.CreateRecord(record);
 
-            var records = Database.Instance.GetAllRecords();
+            var records = Database.Instance.GetAllRecords<SnippetRecord>();
             
             Assert.NotEmpty(records);
 
-            Database.Instance.DeleteRecord("test");
+            Database.Instance.DeleteRecord<SnippetRecord>(record);
             
-            records = Database.Instance.GetAllRecords();
+            records = Database.Instance.GetAllRecords<SnippetRecord>();
             
             Assert.Empty(records);
         }
@@ -50,10 +52,11 @@ namespace SnippetStorage.Tests
         [Fact]
         public void AddRedundantNameTest()
         {
-            Database.Instance.CreateRecord(SnippetRecord.Create("test", "test1.txt"));
-            Database.Instance.CreateRecord(SnippetRecord.Create("test", "test1.txt"));
+            var record = SnippetRecord.Create("test", "test1.txt");
+            Database.Instance.CreateRecord(record);
+            Database.Instance.CreateRecord(record);
             
-            var records = Database.Instance.GetAllRecords();
+            var records = Database.Instance.GetAllRecords<SnippetRecord>();
 
             Assert.Single(records);
         }
@@ -64,11 +67,15 @@ namespace SnippetStorage.Tests
         [Fact]
         public void RetrieveAllRecordsTest()
         {
-            Database.Instance.CreateRecord(SnippetRecord.Create("test1", "test1.txt"));
-            Database.Instance.CreateRecord(SnippetRecord.Create("test2", "test1.txt"));
-            Database.Instance.CreateRecord(SnippetRecord.Create("test3", "test1.txt"));
+            var first = SnippetRecord.Create("test1", "test1.txt");
+            var second = SnippetRecord.Create("test2", "test1.txt");
+            var third = SnippetRecord.Create("test3", "test1.txt");
+                
+            Database.Instance.CreateRecord(first);
+            Database.Instance.CreateRecord(second);
+            Database.Instance.CreateRecord(third);
 
-            var records = Database.Instance.GetAllRecords();
+            var records = Database.Instance.GetAllRecords<SnippetRecord>();
             
             Assert.Equal(3, records.Count());
         }
@@ -79,15 +86,23 @@ namespace SnippetStorage.Tests
         [Fact]
         public void UpdateRecordTest()
         {
-            Database.Instance.CreateRecord(SnippetRecord.Create("test", "test1.txt"));
+            var record = SnippetRecord.Create("test", "test1.txt");
+            
+            Database.Instance.CreateRecord(record);
 
-            var before = Database.Instance.GetRecord("test")?.Content;
+            var before = Database.Instance.GetAllRecords<SnippetRecord>()
+                .FirstOrDefault(x => x.Name == "test")
+                ?.Content;
             
             Assert.Equal("123", before);
 
-            Database.Instance.UpdateRecord(SnippetRecord.Create("test", "test2.txt"));
+            record.Content = "xyz";
             
-            var after = Database.Instance.GetRecord("test")?.Content;
+            Database.Instance.UpdateRecord(record);
+            
+            var after = Database.Instance.GetAllRecords<SnippetRecord>()
+                .FirstOrDefault(x => x.Name == "test")
+                ?.Content;
             
             Assert.Equal("xyz", after);
 

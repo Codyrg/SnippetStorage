@@ -16,7 +16,7 @@
         
         /// <inheritdoc/>
         public int Id { get; set; }
-        
+
         /// <summary>
         /// Name of user's profile
         /// </summary>

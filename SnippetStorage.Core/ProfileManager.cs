@@ -3,13 +3,18 @@
     /// <summary>
     /// Class for managing user profiles
     /// </summary>
-    public class ProfileManager
+    public static class ProfileManager
     {
+        /// <summary>
+        /// The name of the active collection
+        /// </summary>
+        public static string ActiveCollection { get; private set; }
+        
         /// <summary>
         /// Imports a profile from the provided path
         /// </summary>
         /// <param name="path"></param>
-        public void ImportProfile(string path)
+        public static void ImportProfile(string path)
         {
             // TODO: implement
         }
@@ -20,7 +25,7 @@
         /// </summary>
         /// <param name="name">name of profile to export</param>
         /// <param name="path">optional location to export to</param>
-        public void ExportProfile(string name, string path = null)
+        public static void ExportProfile(string name, string path = null)
         {
             // TODO: implement
         }
@@ -29,7 +34,7 @@
         /// Switch to profile with the provided name
         /// </summary>
         /// <param name="name">name of profile to switch to</param>
-        public void SwitchProfile(string name)
+        public static void SwitchProfile(string name)
         {
             // TODO: implement
         }
@@ -38,7 +43,7 @@
         /// Deletes profile with the provided name
         /// </summary>
         /// <param name="name">name of the profile to delete</param>
-        public void DeleteProfile(string name)
+        public static void DeleteProfile(string name)
         {
             // TODO: implement
         }
@@ -48,7 +53,7 @@
         /// </summary>
         /// <param name="source">name of profile to merge into</param>
         /// <param name="branch">name of profile to merge from</param>
-        public void MergeProfiles(string source, string branch)
+        public static void MergeProfiles(string source, string branch)
         {
             // TODO: implement
         }
@@ -58,7 +63,7 @@
         /// lists the details for that specific profile.
         /// </summary>
         /// <param name="name">name of specific profile to list</param>
-        public void ListProfiles(string name = null)
+        public static void ListProfiles(string name = null)
         {
             // TODO: implement
         }
@@ -66,7 +71,7 @@
         /// <summary>
         /// Retrieves the currently active profile
         /// </summary>
-        private void GetActiveProfile()
+        private static void GetActiveProfile()
         {
             // TODO: implement
         }

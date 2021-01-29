@@ -10,7 +10,14 @@
     {
         /// <inheritdoc/>
         public int Id { get; set; }
-        
+
+        /// <summary>
+        /// The owner of this snippet
+        ///
+        /// TODO: Allow for multiple owners
+        /// </summary>
+        public string Owner { get; set; } 
+
         /// <summary>
         /// The name that identifies this snippet
         /// </summary>
@@ -21,6 +28,8 @@
         /// </summary>
         public string Content { get; set; }
 
+        // TODO: add method for updating content given filename
+        
         /// <summary>
         /// Creates a snippet with a given name and the path of the snippet
         ///

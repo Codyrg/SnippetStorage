@@ -18,7 +18,7 @@
             var name = Path.GetRandomFileName();
             var collection = "test";
             
-            Library.Init(name, collection);
+            Library.Init(name);
 
             return Library.InternalDatabaseLocation;
         }

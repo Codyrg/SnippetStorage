@@ -8,6 +8,6 @@
         /// <summary>
         /// Id of record
         /// </summary>
-        public int Id { get; set; }
+        public int Id { get;  }
     }
 }

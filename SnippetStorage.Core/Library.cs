@@ -34,18 +34,12 @@
         /// File path of internal database
         /// </summary>
         public static string InternalDatabaseLocation => Path.Combine(InternalDatabaseFolder, InternalDatabaseName);
-        
-        /// <summary>
-        /// Name of the collection that snippets are stored in
-        /// </summary>
-        public static string CollectionName { get; private set; } = "snippets";
 
         /// <summary>
         /// Initializes the snippet storage library
         /// </summary>
         /// <param name="alternateDbName">An alternate location for storing the database</param>
-        /// <param name="alternateCollectionName">An alternate name for the collection to store documents in</param>
-        public static void Init(string alternateDbName = null, string alternateCollectionName = null)
+        public static void Init(string alternateDbName = null)
         {
             lock (InitLock)
             {
@@ -58,12 +52,7 @@
                 {
                     InternalDatabaseName = alternateDbName;
                 }
-                
-                if (alternateCollectionName != null)
-                {
-                    CollectionName = alternateCollectionName;
-                }
-                
+
                 _initialized = true;
             }
         }

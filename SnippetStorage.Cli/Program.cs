@@ -75,30 +75,31 @@
                 {
                     Log.Info("List command selected . . .");
 
-                    // if name is specified, print content
-                    if (option.Name != null)
-                    {
-                        var record = Database.Instance.GetRecord(option.Name);
-                        
-                        Log.Info(record.Content);
-
-                        return;
-                    }
-                    
-                    // TODO: format in a nice looking table w/ size displayed, a description,
-                    // maybe a preview of the text
-                    var records = Database.Instance.GetAllRecords();
-
-                    if (records.Count() == 0)
-                    {
-                        Log.Info("You have no snippets stored.");
-                        return;
-                    }
-
-                    foreach (var snippetRecord in records)
-                    {
-                        Log.Info(snippetRecord.Name);
-                    }
+                    // TODO: fix
+                    // // if name is specified, print content
+                    // if (option.Name != null)
+                    // {
+                    //     var record = Database.Instance.GetRecord(option.Name);
+                    //     
+                    //     Log.Info(record.Content);
+                    //
+                    //     return;
+                    // }
+                    //
+                    // // TODO: format in a nice looking table w/ size displayed, a description,
+                    // // maybe a preview of the text
+                    // var records = Database.Instance.GetAllRecords();
+                    //
+                    // if (records.Count() == 0)
+                    // {
+                    //     Log.Info("You have no snippets stored.");
+                    //     return;
+                    // }
+                    //
+                    // foreach (var snippetRecord in records)
+                    // {
+                    //     Log.Info(snippetRecord.Name);
+                    // }
                 });
         }
         
@@ -126,20 +127,21 @@
             Parser.Default.ParseArguments<GenerateOptions>(args)
                 .WithParsed(option =>
                 {
-                    Log.Info("Generate command selected . . .");
-                        
-                    try
-                    {
-                        var snippet = Database.Instance.GetRecord(option.Name);
-                            
-                        File.WriteAllText(option.Path, snippet.Content);
-                            
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine(e);
-                        throw;
-                    }
+                    // TODO: fix
+                    // Log.Info("Generate command selected . . .");
+                    //     
+                    // try
+                    // {
+                    //     var snippet = Database.Instance.GetRecord(option.Name);
+                    //         
+                    //     File.WriteAllText(option.Path, snippet.Content);
+                    //         
+                    // }
+                    // catch (Exception e)
+                    // {
+                    //     Console.WriteLine(e);
+                    //     throw;
+                    // }
                 });
         }
         
@@ -152,8 +154,8 @@
             Parser.Default.ParseArguments<DeleteOptions>(args)
                 .WithParsed(option =>
                 {
-                    Database.Instance.DeleteRecord(option.Name);
-
+                    // TODO: fix
+                    // Database.Instance.DeleteRecord(option.Name);
                 });
         }
     }
